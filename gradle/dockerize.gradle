@@ -48,14 +48,12 @@ task createDockerfile(type: Dockerfile) {
   logger.quiet "exploding to $targetAppTar"
   runCommand "mv $targetRootFolder/$appFolder $targetRootFolder/$appName"
   user "yatra"
+  destFile = project.file('Dockerfile')
   exposePort 8080
 }
 
 task buildImage(type: DockerBuildImage) {
-  description "Builds the Yatra Docker image"
-  dependsOn createDockerfile
-  inputDir = createDockerfile.destFile.parentFile
-  pull = true
+  inputDir = file('.')
   String imageTag = "prod" == pDockerImageEnv ? "$pversion-$revision" : "latest"
   tag = "$dockerRegistryUrl/midoffice/$serviceName:$imageTag"
 }
