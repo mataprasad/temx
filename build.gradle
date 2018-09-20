@@ -1,0 +1,14 @@
+    buildscript {
+        repositories {
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+    }
+
+    plugins {
+        id "java"
+    }
+
+    apply from: "$rootDir/gradle/versioning.gradle"
+    apply from: "$rootDir/gradle/dockerize.gradle"
+
+    [compileJava, compileTestJava]*.options*.encoding = 'UTF-8'
